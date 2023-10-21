@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">MultiWidget</string>
+
+    <!-- WidgetStrings -->
+    <string name="before_start_title">Перед началом нужно настроить виджет, это можно сделать в приложении</string>
+    <string name="before_start_open_app">Открыть проиложение</string>
+
+    <string name="calendar_today">Сегодня</string>
+    <string name="calendar_not_today">В будущем</string>
+    <string name="calendar_all_day">Весь день</string>
+
+    <!-- Settings Screen -->
+
+    <string name="settings_weather_title">Отображение погоды</string>
+    <string name="settings_calendar_title">Отображение календаря</string>
+    <string name="settings_in_app_title">Отображение виджета в приложении</string>
+    <string name="settings_otp_title">Отображение OTP пароля</string>
+
+    <string name="weather_settings_loc_permission_title">Разрешите доступ к локации для автоматического получения позиции</string>
+    <string name="weather_settings_loc_permission_title_alredy_have">Доступ к локации для получения погоды есть</string>
+    <string name="weather_settings_grant_permission">Разрешить определение локации</string>
+    <string name="weather_settings_yandex_token_title">Токен яндекс погоды</string>
+    <string name="weather_settings_user_pos">Позиция пользователя</string>
+    <string name="weather_settings_user_pos_lat">Широта</string>
+    <string name="weather_settings_user_pos_lng">Долгота</string>
+    <string name="weather_settings_user_pos_auto_action">Определить автоматически</string>
+
+    <string name="calendar_settings_grant_permission_title">Для отображения событий из календаря тоже нужно разрешение :)</string>
+    <string name="calendar_settings_grant_permission_title_already_have">Чтение календарей разрешено</string>
+    <string name="calendar_settings_grant_permission_action">Разрешить чтение календаря</string>
+
+    <string name="settings_in_app_widget_open_widget">Открыть виджет</string>
+
+    <string name="settings_save_button">Сохранить</string>
+</resources>
