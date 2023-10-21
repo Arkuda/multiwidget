@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
@@ -34,7 +35,8 @@ import com.kiryantsev.multiwidget.core.theme.MultiWidgetTheme
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SettingsScreenImpl(
-    viewModel: SettingsScreenViewModel
+    viewModel: SettingsScreenViewModel,
+    navController: NavController
 ) {
     val locationPermissionState = rememberPermissionState(
         ACCESS_FINE_LOCATION
@@ -65,6 +67,9 @@ fun SettingsScreenImpl(
                 )
             )
         },
+        onOpenInAppWidgetScreen = {
+            navController.navigate(Router.IN_APP_WIDGET_ROUTE)
+        }
     )
 }
 
@@ -83,9 +88,8 @@ private fun SettingsScreenImpl(
     onChangedCalendarSwitchState: (Boolean, Boolean) -> Unit,
     onChangedUserPos: (String, String) -> Unit,
     onTryAutomaticGetPosition: () -> Unit,
+    onOpenInAppWidgetScreen: () -> Unit,
 ) {
-    val navController = rememberNavController()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -143,10 +147,7 @@ private fun SettingsScreenImpl(
         if (state.isInAppWidgetEnabled) {
             Button(
                 content = { Text(stringResource(R.string.settings_in_app_widget_open_widget)) },
-                onClick = {
-                    navController.navigate("inAppWidget")
-//                    navController.navigate(Router.IN_APP_WIDGET_SCREEN)
-                },
+                onClick = onOpenInAppWidgetScreen,
             )
         }
         Button(
@@ -182,7 +183,8 @@ private fun SettingsScreenDisabledPreview() {
             onChangedCalendarSwitchState = { _, _ -> },
             onChangedChangeInAppWidgetSwitchState = {},
             onChangedUserPos = { _, _ -> },
-            onTryAutomaticGetPosition = {}
+            onTryAutomaticGetPosition = {},
+            onOpenInAppWidgetScreen = {}
         )
     }
 }
@@ -212,7 +214,7 @@ private fun SettingsScreenEnableddPreview() {
             onChangedCalendarSwitchState = { _, _ -> },
             onChangedUserPos = { _, _ -> },
             onTryAutomaticGetPosition = {},
-
-            )
+            onOpenInAppWidgetScreen = {}
+        )
     }
 }

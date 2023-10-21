@@ -9,18 +9,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 
 @Composable
-fun InAppWidget(viewModel: InAppWidgetViewModel) {
+fun InAppWidgetScreen(viewModel: InAppWidgetViewModel, navController: NavController) {
     val state = viewModel.state.collectAsState().value
-    InAppWidgetImpl(state = state)
+    InAppWidgetScreenImpl(state = state)
 
 }
 
 
 @Composable
-private fun InAppWidgetImpl(state: InAppWidgetState){
+private fun InAppWidgetScreenImpl(state: InAppWidgetState){
     Scaffold {
         Row(Modifier.padding(it)) {
 

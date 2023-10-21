@@ -25,9 +25,14 @@ class MainActivity : ComponentActivity() {
 
         val application = application
         setContent {
+            val navController = rememberNavController()
             MultiWidgetTheme {
-                NavHost(navController = rememberNavController(), startDestination = APP_ROUTE){
-                    Router.buildNavGraph(this,application)
+                NavHost(navController = navController, startDestination = APP_ROUTE) {
+                    Router.buildNavGraph(
+                        builder = this,
+                        application = application,
+                        navController = navController
+                    )
                 }
             }
         }
