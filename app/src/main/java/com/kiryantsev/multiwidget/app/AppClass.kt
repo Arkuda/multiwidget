@@ -2,7 +2,7 @@ package com.kiryantsev.multiwidget.app
 
 import android.app.Application
 import androidx.work.Configuration
-import com.kiryantsev.multiwidget.core.di.BackgroundSyncWorkerFactory
+import com.kiryantsev.multiwidget.core.di.CustomWorkerFactory
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import javax.inject.Inject
 class AppClass : Application(), Configuration.Provider {
 
     @Inject
-    lateinit var workerFactory: BackgroundSyncWorkerFactory
+    lateinit var workerFactory: CustomWorkerFactory
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()

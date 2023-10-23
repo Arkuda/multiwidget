@@ -10,7 +10,6 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
-import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
@@ -18,7 +17,7 @@ import androidx.glance.layout.width
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
-import com.kiryantsev.multiwidget.core.weather.db.entities.CurrentWeatherEntity
+import com.kiryantsev.multiwidget.core.weather.yaweather.db.entities.CurrentWeatherEntity
 
 @Composable
 fun WeatherWidget(currentWeatherEntity: CurrentWeatherEntity) {
@@ -27,7 +26,7 @@ fun WeatherWidget(currentWeatherEntity: CurrentWeatherEntity) {
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
         verticalAlignment = Alignment.Vertical.CenterVertically,
     ) {
-        WeatherIcon(
+        GlanceWeatherIcon(
             modifier = GlanceModifier.size(width = 64.dp, height = 64.dp),
             name = currentWeatherEntity.icon,
             dayTime = currentWeatherEntity.daytime

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -124,6 +126,7 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.44")
     kapt ("com.google.dagger:hilt-compiler:2.44")
     implementation ("androidx.hilt:hilt-work:1.0.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     //easy shared prefs
     implementation ("com.pixplicity.easyprefs:EasyPrefs:1.10.0")
@@ -133,6 +136,15 @@ dependencies {
 
     //kotlin datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+
+    //glassmorphic - blur
+//    implementation("com.github.jakhongirmadaminov:glassmorphic-composables:0.0.4")
+
+    //async image loading
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    //openweather
+    implementation ("com.github.KwabenBerko:OpenWeatherMap-Android-Library:2.1.0")
 
 }
 

@@ -1,7 +1,7 @@
 package com.kiryantsev.multiwidget.widget
 
 import com.kiryantsev.multiwidget.core.calendar.db.CalendarEventEntity
-import com.kiryantsev.multiwidget.core.weather.db.entities.CurrentWeatherEntity
+import com.kiryantsev.multiwidget.core.weather.yaweather.db.entities.CurrentWeatherEntity
 import kotlinx.serialization.Serializable
 
 

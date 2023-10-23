@@ -6,10 +6,9 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.google.gson.Gson
 import com.kiryantsev.multiwidget.core.calendar.db.CalendarEventsDao
 import com.kiryantsev.multiwidget.core.settings.SettingsEntity
-import com.kiryantsev.multiwidget.core.weather.db.dao.CurrentWeatherDao
+import com.kiryantsev.multiwidget.core.weather.yaweather.db.dao.CurrentWeatherDao
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors

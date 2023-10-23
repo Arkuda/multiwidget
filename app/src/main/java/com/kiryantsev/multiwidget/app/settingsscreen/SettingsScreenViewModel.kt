@@ -12,7 +12,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
-import com.kiryantsev.multiwidget.core.BackgroundSyncWorker
+import com.kiryantsev.multiwidget.core.workers.BackgroundSyncWorker
 import com.kiryantsev.multiwidget.core.settings.SettingsEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -75,7 +75,7 @@ class SettingsScreenViewModel(
     fun onChangedWeatherSwitchState(isEnabled: Boolean) {
         viewModelScope.launch {
             _state.emit(
-                state.value.copy(isWeatherEnabled = isEnabled)
+                state.value.copy(isYaWeatherEnabled = isEnabled)
             )
         }
     }
@@ -109,6 +109,13 @@ class SettingsScreenViewModel(
         }
     }
 
+    fun onChangedOpenWeatherToken(token: String) {
+        viewModelScope.launch {
+            _state.emit(
+                state.value.copy(openWeatherToken = token)
+            )
+        }
+    }
 
     fun onChangedUserPos(lat: String, lng: String) {
         val dLat = lat.toDoubleOrNull()
@@ -149,7 +156,7 @@ class SettingsScreenViewModel(
     fun onSaveClick() {
         state.value.toSettings().save() //save settings
 
-        if(state.value.run { isWeatherEnabled || isCalendarEnabled || isOtpEnabled }){
+        if(state.value.run { isYaWeatherEnabled || isCalendarEnabled || isOtpEnabled }){
             viewModelScope.launch {
                 val workManager = WorkManager.getInstance(application)
 
@@ -164,7 +171,7 @@ class SettingsScreenViewModel(
                     TimeUnit.MINUTES
                 ).setConstraints(constraints).build()
 
-                workManager.enqueue(work)
+//                workManager.enqueue(work)
             }
         }
     }

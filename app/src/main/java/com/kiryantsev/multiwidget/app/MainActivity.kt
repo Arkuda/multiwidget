@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
             .setUseDefaultSharedPreference(true)
             .build()
 
+
         val application = application
         setContent {
             val navController = rememberNavController()
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
                     Router.buildNavGraph(
                         builder = this,
                         application = application,
+                        window = window,
                         navController = navController
                     )
                 }

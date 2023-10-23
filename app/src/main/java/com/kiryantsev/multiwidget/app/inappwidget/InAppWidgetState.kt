@@ -1,7 +1,7 @@
 package com.kiryantsev.multiwidget.app.inappwidget
 
-import com.kiryantsev.multiwidget.core.weather.db.entities.CurrentWeatherEntity
+import com.kiryantsev.multiwidget.core.weather.yaweather.dto.WeatherDataClass
 
 data class InAppWidgetState(
-    val currWeather : CurrentWeatherEntity? = null
+    val weather : WeatherDataClass? = null
 )

@@ -20,15 +20,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.LocationServices
 import com.kiryantsev.multiwidget.R
 import com.kiryantsev.multiwidget.app.Router
-import com.kiryantsev.multiwidget.app.widget.CalendarSettingsWidget
-import com.kiryantsev.multiwidget.app.widget.WeatherSettingsWidget
+import com.kiryantsev.multiwidget.app.settingsscreen.widgets.CalendarSettingsWidget
+import com.kiryantsev.multiwidget.app.settingsscreen.widgets.WeatherSettingsWidget
 import com.kiryantsev.multiwidget.core.theme.MultiWidgetTheme
 
 
@@ -59,6 +58,7 @@ fun SettingsScreenImpl(
         onChangedCalendarSwitchState = viewModel::onChangedCalendarSwitchState,
         onChangedChangeInAppWidgetSwitchState = viewModel::onChangedChangeInAppWidgetSwitchState,
         onChangedYandexToken = viewModel::onChangedYandexToken,
+        onChangedOpenWeatherToken = viewModel::onChangedOpenWeatherToken,
         onChangedUserPos = viewModel::onChangedUserPos,
         onTryAutomaticGetPosition = {
             viewModel.onTryAutomaticGetPosition(
@@ -82,6 +82,7 @@ private fun SettingsScreenImpl(
     onSaveClick: () -> Unit,
     onRequestCalendarPermission: () -> Unit,
     onRequestLocationPermission: () -> Unit,
+    onChangedOpenWeatherToken: (String) -> Unit,
     onChangedYandexToken: (String) -> Unit,
     onChangedWeatherSwitchState: (Boolean) -> Unit,
     onChangedChangeInAppWidgetSwitchState: (Boolean) -> Unit,
@@ -95,20 +96,22 @@ private fun SettingsScreenImpl(
     ) {
 
         ListItem(
-            headlineText = { Text(stringResource(R.string.settings_weather_title)) },
+            headlineText = { Text(stringResource(R.string.settings_yandex_weather_title)) },
             trailingContent = {
                 Switch(
-                    checked = state.isWeatherEnabled,
+                    checked = state.isYaWeatherEnabled,
                     onCheckedChange = onChangedWeatherSwitchState
                 )
             },
         )
-        if (state.isWeatherEnabled) {
+        if (state.isYaWeatherEnabled) {
             WeatherSettingsWidget(
-                yandexTokenString = state.yandexToken,
+                yaToken = state.yandexToken,
+                openWeatherToken = state.openWeatherToken,
                 locationPermissionIsGranted = haveLocationPermission,
                 onRequestPermission = onRequestLocationPermission,
-                onTokenChanged = onChangedYandexToken,
+                onYaTokenChanged = onChangedYandexToken,
+                onOpenWeatherTokenChanged = onChangedOpenWeatherToken,
                 posLat = state.userLat,
                 posLng = state.userLng,
                 onChangedPosition = onChangedUserPos,
@@ -166,10 +169,11 @@ private fun SettingsScreenDisabledPreview() {
         SettingsScreenImpl(
             state = SettingsScreenState(
                 yandexToken = "",
+                openWeatherToken = "",
                 userLat = .0,
                 userLng = .0,
                 isCalendarEnabled = false,
-                isWeatherEnabled = false,
+                isYaWeatherEnabled = false,
                 isOtpEnabled = false,
                 isInAppWidgetEnabled = false
             ),
@@ -177,6 +181,7 @@ private fun SettingsScreenDisabledPreview() {
             haveLocationPermission = false,
             onSaveClick = {},
             onChangedYandexToken = {},
+            onChangedOpenWeatherToken = {},
             onRequestCalendarPermission = {},
             onRequestLocationPermission = {},
             onChangedWeatherSwitchState = {},
@@ -196,10 +201,11 @@ private fun SettingsScreenEnableddPreview() {
         SettingsScreenImpl(
             state = SettingsScreenState(
                 yandexToken = "",
+                openWeatherToken = "",
                 userLat = .0,
                 userLng = .0,
                 isCalendarEnabled = true,
-                isWeatherEnabled = true,
+                isYaWeatherEnabled = true,
                 isOtpEnabled = false,
                 isInAppWidgetEnabled = true
             ),
@@ -207,6 +213,7 @@ private fun SettingsScreenEnableddPreview() {
             haveLocationPermission = false,
             onSaveClick = {},
             onChangedYandexToken = {},
+            onChangedOpenWeatherToken = {},
             onRequestCalendarPermission = {},
             onRequestLocationPermission = {},
             onChangedWeatherSwitchState = {},

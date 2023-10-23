@@ -4,6 +4,7 @@ import com.pixplicity.easyprefs.library.Prefs
 
 data class SettingsEntity(
     val yandexToken: String,
+    val openWeatherToken: String,
     val userLat: Double,
     val userLng: Double,
     val isWeatherEnabled: Boolean,
@@ -13,6 +14,7 @@ data class SettingsEntity(
 ) {
     companion object {
         private const val YANDEX_TOKEN_KEY = "yandexToken"
+        private const val OPENWEATHER_TOKEN_KEY = "openWeatherToken"
         private const val USER_LAT_KEY = "userLat"
         private const val USER_LNG_KEY = "userLng"
         private const val IS_WEATHER_ENABLED_KEY = "isWeatherEnabled"
@@ -22,6 +24,7 @@ data class SettingsEntity(
 
         fun load() = SettingsEntity(
             yandexToken = Prefs.getString(YANDEX_TOKEN_KEY, ""),
+            openWeatherToken = Prefs.getString(OPENWEATHER_TOKEN_KEY, ""),
             userLat = Prefs.getDouble(USER_LAT_KEY, .0),
             userLng = Prefs.getDouble(USER_LNG_KEY, .0),
             isWeatherEnabled = Prefs.getBoolean(IS_WEATHER_ENABLED_KEY, false),
@@ -33,6 +36,7 @@ data class SettingsEntity(
 
     fun save() {
         Prefs.putString(YANDEX_TOKEN_KEY, yandexToken)
+        Prefs.putString(OPENWEATHER_TOKEN_KEY, openWeatherToken)
         Prefs.putDouble(USER_LAT_KEY, userLat)
         Prefs.putDouble(USER_LNG_KEY, userLng)
         Prefs.putBoolean(IS_WEATHER_ENABLED_KEY, isWeatherEnabled)

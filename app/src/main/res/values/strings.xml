@@ -11,7 +11,8 @@
 
     <!-- Settings Screen -->
 
-    <string name="settings_weather_title">Отображение погоды</string>
+    <string name="settings_yandex_weather_title">Отображение яндекс погоды</string>
+    <string name="settings_openweather_weather_title">Отображение  погоды</string>
     <string name="settings_calendar_title">Отображение календаря</string>
     <string name="settings_in_app_title">Отображение виджета в приложении</string>
     <string name="settings_otp_title">Отображение OTP пароля</string>
@@ -20,6 +21,7 @@
     <string name="weather_settings_loc_permission_title_alredy_have">Доступ к локации для получения погоды есть</string>
     <string name="weather_settings_grant_permission">Разрешить определение локации</string>
     <string name="weather_settings_yandex_token_title">Токен яндекс погоды</string>
+    <string name="weather_settings_openweather_token_title">Токен OpenWeather погоды</string>
     <string name="weather_settings_user_pos">Позиция пользователя</string>
     <string name="weather_settings_user_pos_lat">Широта</string>
     <string name="weather_settings_user_pos_lng">Долгота</string>
