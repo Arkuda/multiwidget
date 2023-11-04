@@ -1,67 +1,73 @@
 package com.kiryantsev.multiwidget.app.inappwidget
 
 import android.app.Application
-import androidx.lifecycle.LifecycleOwner
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.kiryantsev.multiwidget.core.workers.ForegroundSyncWorker
+import com.google.gson.Gson
+import com.kiryantsev.multiwidget.core.settings.SettingsEntity
+import com.kiryantsev.multiwidget.core.weather.openweather.OpenWeatherClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.runBlocking
+import java.util.Timer
+import java.util.TimerTask
 import javax.inject.Inject
 
 
 @HiltViewModel
 class InAppWidgetViewModel @Inject constructor(
-   private val application: Application
+    private val application: Application
 ) : ViewModel() {
     private val _state = MutableStateFlow(InAppWidgetState())
-    val state : StateFlow<InAppWidgetState> = _state.asStateFlow()
+    val state: StateFlow<InAppWidgetState> = _state.asStateFlow()
 
-    private val workManager = WorkManager.getInstance(application)
+    private var timer: Timer? = null
 
-    fun init(lifecycleOwner: LifecycleOwner) {
-        runWorkAndSubscribe(lifecycleOwner)
+    fun init() {
+        runPeriodicUpdateWeather()
     }
 
-    fun onDestroy() = workManager.cancelAllWork()
+    fun onDestroy() = timer?.cancel()
 
-    private fun runWorkAndSubscribe(lifecycleOwner: LifecycleOwner) {
+    private fun runPeriodicUpdateWeather() {
         viewModelScope.launch {
+            timer = Timer().apply {
+                schedule(object : TimerTask() {
+                    override fun run() {
+                        val settings = SettingsEntity.load()
 
+                        if (settings.openWeatherToken.isNotEmpty()) {
+                            runBlocking {
+                                val client = OpenWeatherClient()
+                                val currentWeather =
+                                    client.getCurrentWether(settings.userLat, settings.userLng)
+                                val forecast =
+                                    client.getForecast(settings.userLat, settings.userLng)
+                                if (currentWeather != null) {
+                                    viewModelScope.launch {
+                                        _state.emit(_state.value.copy(weather = currentWeather))
+                                    }
+                                }
+                                if (forecast != null) {
+                                    Log.d("TTT", Gson().toJson(forecast))
+                                    viewModelScope.launch {
+                                        _state.emit(_state.value.copy(forecast = forecast))
+                                    }
+                                }
+                            }
+                        }
 
-            workManager.cancelAllWork()
-
-            //init service
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            val work = PeriodicWorkRequestBuilder<ForegroundSyncWorker>(
-                15,
-                TimeUnit.MINUTES
-            ).setConstraints(constraints).build()
-
-            //subscribe to update
-            val workLiveData = workManager.getWorkInfoByIdLiveData(work.id)
-            workLiveData.observe(lifecycleOwner) {
-                val weather = ForegroundSyncWorker.extractWeatherRes(it.outputData)
-                if (weather != null) {
-                    viewModelScope.launch {
-                        _state.emit(_state.value.copy(weather = weather))
                     }
-                }
-            }
 
-            //start service
-            workManager.enqueue(work)
+                }, 0, 900000) // 15 mins
+            }
         }
     }
 
 }
+
+

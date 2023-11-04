@@ -26,8 +26,8 @@ import com.kiryantsev.multiwidget.core.theme.MultiWidgetTheme
 fun WeatherSettingsWidget(
     yaToken: String,
     openWeatherToken: String,
-    posLat: Double,
-    posLng: Double,
+    posLat: String,
+    posLng: String,
     locationPermissionIsGranted: Boolean,
     onRequestPermission: () -> Unit,
     onYaTokenChanged: (String) -> Unit,
@@ -106,8 +106,8 @@ private fun WeatherSettingsWidgetPreviewDontHave() {
         WeatherSettingsWidget(
             "TEST_TOKEN",
             "TESTOPENWEATHER",
-            posLat = .0,
-            posLng = .0,
+            posLat = "",
+            posLng = "",
             false,
             {},
             {},
@@ -126,8 +126,8 @@ private fun WeatherSettingsWidgetPreviewHave() {
         WeatherSettingsWidget(
             "TEST_TOKEN",
             "TESTOPENWEATHER",
-            posLat = .0,
-            posLng = .0,
+            posLat = "",
+            posLng = "",
             true,
             {},
             {},

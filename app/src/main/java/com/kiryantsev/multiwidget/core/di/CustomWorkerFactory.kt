@@ -9,7 +9,6 @@ import com.kiryantsev.multiwidget.core.workers.BackgroundSyncWorker
 import com.kiryantsev.multiwidget.core.calendar.db.CalendarEventsDao
 import com.kiryantsev.multiwidget.core.weather.yaweather.YandexWeatherApi
 import com.kiryantsev.multiwidget.core.weather.yaweather.db.dao.CurrentWeatherDao
-import com.kiryantsev.multiwidget.core.workers.ForegroundSyncWorker
 import javax.inject.Inject
 
 
@@ -30,14 +29,6 @@ class CustomWorkerFactory @Inject constructor(
     ): ListenableWorker? {
         if (workerClassName == BackgroundSyncWorker::class.java.name) {
             return BackgroundSyncWorker(
-                context = appContext,
-                workerParams = workerParameters,
-                currentWeatherDao = currentWeatherDao,
-                api = api,
-                calendarEventsDao = calendarEventsDao,
-            )
-        }else if(workerClassName == ForegroundSyncWorker::class.java.name) {
-            return ForegroundSyncWorker(
                 context = appContext,
                 workerParams = workerParameters,
                 currentWeatherDao = currentWeatherDao,

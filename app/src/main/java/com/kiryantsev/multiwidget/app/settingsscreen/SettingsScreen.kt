@@ -170,8 +170,8 @@ private fun SettingsScreenDisabledPreview() {
             state = SettingsScreenState(
                 yandexToken = "",
                 openWeatherToken = "",
-                userLat = .0,
-                userLng = .0,
+                userLat = "",
+                userLng = "",
                 isCalendarEnabled = false,
                 isYaWeatherEnabled = false,
                 isOtpEnabled = false,
@@ -202,8 +202,8 @@ private fun SettingsScreenEnableddPreview() {
             state = SettingsScreenState(
                 yandexToken = "",
                 openWeatherToken = "",
-                userLat = .0,
-                userLng = .0,
+                userLat = "",
+                userLng = "",
                 isCalendarEnabled = true,
                 isYaWeatherEnabled = true,
                 isOtpEnabled = false,

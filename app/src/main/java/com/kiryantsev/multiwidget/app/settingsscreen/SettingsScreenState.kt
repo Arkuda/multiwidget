@@ -5,8 +5,8 @@ import com.kiryantsev.multiwidget.core.settings.SettingsEntity
 data class SettingsScreenState(
     val yandexToken: String,
     val openWeatherToken: String,
-    val userLat: Double,
-    val userLng: Double,
+    val userLat: String,
+    val userLng: String,
     val isYaWeatherEnabled: Boolean,
     val isCalendarEnabled: Boolean,
     val isOtpEnabled: Boolean,
@@ -16,7 +16,7 @@ data class SettingsScreenState(
 ) {
 
     fun isSaveButtonEnabled(): Boolean {
-        if (isYaWeatherEnabled && (yandexToken.isEmpty() || openWeatherToken.isEmpty()) && (userLat == .0 || userLng == .0)) return false
+        if (isYaWeatherEnabled && (yandexToken.isEmpty() || openWeatherToken.isEmpty()) && (userLat.isEmpty() || userLng.isEmpty())) return false
         if (isCalendarEnabled && !isHaveCalendarPermission) return false
         return true
     }
@@ -24,8 +24,8 @@ data class SettingsScreenState(
     fun toSettings() = SettingsEntity(
         yandexToken = this.yandexToken,
         openWeatherToken = this.openWeatherToken,
-        userLat = this.userLat,
-        userLng = this.userLng,
+        userLat = this.userLat.toDouble(),
+        userLng = this.userLng.toDouble(),
         isWeatherEnabled = this.isYaWeatherEnabled,
         isCalendarEnabled = this.isCalendarEnabled,
         isOtpEnabled = this.isOtpEnabled,
@@ -37,8 +37,8 @@ data class SettingsScreenState(
             SettingsScreenState(
                 yandexToken = this.yandexToken,
                 openWeatherToken = this.openWeatherToken,
-                userLng = this.userLng,
-                userLat = this.userLat,
+                userLng = this.userLng.toString(),
+                userLat = this.userLat.toString(),
                 isYaWeatherEnabled = this.isWeatherEnabled,
                 isCalendarEnabled = this.isCalendarEnabled,
                 isOtpEnabled = this.isOtpEnabled,

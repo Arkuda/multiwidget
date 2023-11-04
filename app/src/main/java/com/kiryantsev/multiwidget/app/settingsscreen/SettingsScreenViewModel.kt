@@ -2,6 +2,7 @@ package com.kiryantsev.multiwidget.app.settingsscreen
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Constraints
@@ -12,6 +13,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.Task
+import com.google.gson.Gson
 import com.kiryantsev.multiwidget.core.workers.BackgroundSyncWorker
 import com.kiryantsev.multiwidget.core.settings.SettingsEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -118,13 +120,11 @@ class SettingsScreenViewModel(
     }
 
     fun onChangedUserPos(lat: String, lng: String) {
-        val dLat = lat.toDoubleOrNull()
-        val dLng = lng.toDoubleOrNull()
         viewModelScope.launch {
             _state.emit(
                 state.value.copy(
-                    userLat = dLat ?: .0,
-                    userLng = dLng ?: .0
+                    userLat = lat,
+                    userLng = lng
                 )
             )
         }
@@ -140,13 +140,12 @@ class SettingsScreenViewModel(
             _state.emit(state.value.copy(locationFetchingInProgress = true))
 
             val location = currLocTask.await()
-
             state.value.apply {
                 _state.emit(
                     copy(
                         locationFetchingInProgress = false,
-                        userLat = location?.latitude ?: userLat,
-                        userLng = location?.longitude ?: userLng
+                        userLat = location?.latitude.toString() ?: userLat,
+                        userLng = location?.longitude.toString() ?: userLng
                     )
                 )
             }
